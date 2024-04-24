@@ -134,10 +134,10 @@ const Form = () => {
         ) : (
           <div className="flex flex-col items-center justify-center gap-x-2">
             <IconImage />
-            <p className="text-xl font-bold">
+            <p className="text-xl font-bold text-center">
               Drop Image or Select Image from Device
             </p>
-            <p>Accepts .png and .jpg up to 5MB</p>
+            <p className="text-center">Accepts .png and .jpg up to 5MB</p>
           </div>
         )}
       </label>
