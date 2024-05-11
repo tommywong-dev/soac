@@ -1,4 +1,6 @@
 export type RoboflowDetectResult = {
+  /** time in seconds */
+  time: number;
   predictions: {
     x: number;
     y: number;
@@ -7,14 +9,16 @@ export type RoboflowDetectResult = {
     class: string;
     confidence: number;
   }[];
+};
+
+export type DetectResult = RoboflowDetectResult & {
   imageBase64: string;
 };
 
 export type UploadResult =
   | {
       ok: true;
-      result: RoboflowDetectResult;
-      duration: number;
+      result: DetectResult;
     }
   | {
       ok: false;

@@ -119,7 +119,7 @@ const Form = () => {
               fill
               src={uploadResult.result.imageBase64}
               alt={"Predictions"}
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         ) : uploadingImage ? (
@@ -128,7 +128,7 @@ const Form = () => {
               fill
               src={uploadingImage.uri}
               alt={uploadingImage.file.name}
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         ) : (
@@ -150,7 +150,7 @@ const Form = () => {
           {uploadResult.ok
             ? `Count: ${
                 uploadResult.result.predictions.length
-              } (${uploadResult.duration.toFixed(3)}ms)`
+              } (${uploadResult.result.time.toFixed(3)}s)`
             : uploadResult.error}
         </h4>
       )}
