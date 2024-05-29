@@ -11,7 +11,7 @@ import IconImage from "./IconImage";
 import Image from "next/image";
 import { serverActionDetectImage } from "./actions";
 import { UploadResult } from "./types";
-import { convertToBase64 } from "./utils";
+import { convertBlobToBase64 } from "./utils";
 
 const Form = () => {
   const [isDragging, setDragging] = useState(false);
@@ -67,7 +67,7 @@ const Form = () => {
       return;
     }
 
-    const imageBase64 = await convertToBase64(uploadingImage.file);
+    const imageBase64 = await convertBlobToBase64(uploadingImage.file);
 
     setCounting(true);
     const result = await serverActionDetectImage(imageBase64);
