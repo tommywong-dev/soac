@@ -12,3 +12,13 @@ export const convertBlobToBase64 = async (blob: Blob): Promise<string> => {
     };
   });
 };
+
+export const isImage = (file: File) => {
+  const acceptedExtensions = ["png", "jpg", "jpeg"];
+  const extension = file.name.split(".")[1];
+  return acceptedExtensions.includes(extension);
+};
+
+export const isSmall = (file: File) => {
+  return file.size <= 1e6;
+};

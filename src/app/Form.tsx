@@ -11,7 +11,7 @@ import IconImage from "./IconImage";
 import Image from "next/image";
 import { serverActionDetectImage } from "./actions";
 import { UploadResult } from "./types";
-import { convertBlobToBase64 } from "./utils";
+import { convertBlobToBase64, isImage, isSmall } from "./utils";
 
 const Form = () => {
   const [isDragging, setDragging] = useState(false);
@@ -22,16 +22,33 @@ const Form = () => {
   const [isCounting, setCounting] = useState(false);
   const [uploadResult, setUploadResult] = useState<UploadResult>();
 
+  const validateAndDisplayImage = (file: File) => {
+    if (!isImage(file)) {
+      setUploadResult({
+        error: "Accepts .png and .jpg only",
+        ok: false,
+      });
+      return;
+    }
+    if (!isSmall(file)) {
+      setUploadResult({
+        error: "Accepts up to 1MB only",
+        ok: false,
+      });
+      return;
+    }
+    const uri = URL.createObjectURL(file);
+    setUploadingImage({ uri, file });
+    setDragging(false);
+  };
+
   const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!e.target.files || !e.target.files[0]) {
       return;
     }
 
-    const file = e.target.files[0];
-    const uri = URL.createObjectURL(file);
-    setUploadingImage({ uri, file });
-    setUploadResult(undefined);
+    validateAndDisplayImage(e.target.files[0]);
   };
 
   const handleDrop: DragEventHandler<HTMLLabelElement> = (e) => {
@@ -41,10 +58,7 @@ const Form = () => {
       return;
     }
 
-    const file = e.dataTransfer.files[0];
-    const uri = URL.createObjectURL(file);
-    setUploadingImage({ uri, file });
-    setDragging(false);
+    validateAndDisplayImage(e.dataTransfer.files[0]);
   };
 
   const handleDragEnter: DragEventHandler<HTMLLabelElement> = (e) => {
@@ -137,7 +151,7 @@ const Form = () => {
             <p className="text-xl font-bold text-center">
               Drop Image or Select Image from Device
             </p>
-            <p className="text-center">Accepts .png and .jpg up to 5MB</p>
+            <p className="text-center">Accepts .png and .jpg up to 1MB</p>
           </div>
         )}
       </label>
