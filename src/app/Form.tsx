@@ -28,6 +28,7 @@ const Form = () => {
         error: "Accepts .png and .jpg only",
         ok: false,
       });
+      setUploadingImage(undefined);
       return;
     }
     if (!isSmall(file)) {
@@ -35,6 +36,7 @@ const Form = () => {
         error: "Accepts up to 1MB only",
         ok: false,
       });
+      setUploadingImage(undefined);
       return;
     }
     const uri = URL.createObjectURL(file);
