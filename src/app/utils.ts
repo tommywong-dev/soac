@@ -15,7 +15,8 @@ export const convertBlobToBase64 = async (blob: Blob): Promise<string> => {
 
 export const isImage = (file: File) => {
   const acceptedExtensions = ["png", "jpg", "jpeg"];
-  const extension = file.name.split(".")[1];
+  const fileNameSplitted = file.name.split(".");
+  const extension = fileNameSplitted[fileNameSplitted.length - 1];
   return acceptedExtensions.includes(extension);
 };
 

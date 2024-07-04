@@ -50,6 +50,7 @@ const Form = () => {
       return;
     }
 
+    console.log("e.target.files[0]", e.target.files[0]);
     validateAndDisplayImage(e.target.files[0]);
   };
 
